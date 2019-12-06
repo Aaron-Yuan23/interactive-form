@@ -50,6 +50,9 @@ $("#title").on("change", ()=> {
 /*-----------register for activities----------*/
 let total = 0;
 const $totalHtml = $("<div class='total'><p></p></div>");
+$totalHtml.children().css("color","#28B463");
+$totalHtml.children().css("font-weight", "bold");
+$totalHtml.children().css("font-size", "20px");
 $(".activities").append($totalHtml);
 
 //creating activities
@@ -66,14 +69,20 @@ function addActivity(activityName, price, conflictName){
 
   $activity.on("change", ()=>{
     if($activity.is(":checked")) {
-			total += price;
+      total += price;
+      if(total !== 0){
+        $totalHtml.show();
+      }
 			$('.total p').text('Total: $' + total);
 			if(conflictName !== '') {
 				toggleCheckbox(conflictName, false);
 			}
 		}
 		else {
-			total -= price;
+      total -= price;
+      if(total === 0){
+        $totalHtml.hide();
+      }
 			$('.total p').text('Total: $' + total);
 			if(conflictName !== '') {
 				toggleCheckbox(conflictName, true);
@@ -100,4 +109,36 @@ function toggleCheckbox(activityName, enable){
 }
 
 /*--------------payment Info---------------*/
+const $payment = $('#payment');
+const $creditCard = $('#credit-card');
+const $paypal = $('#paypal');
+const $bitcoin = $('#bitcoin');
 
+//setting credit card as default payment method
+$payment.prop('selectedIndex', 1);
+$paypal.hide();
+$bitcoin.hide();
+
+//selecting different payment methods
+$payment.on("change", ()=> {
+  if($("#payment option:selected").val() === "select method"){
+    $creditCard.hide();
+    $paypal.hide();
+    $bitcoin.hide();
+  }
+  if($("#payment option:selected").val() === "credit card"){
+    $creditCard.show();
+    $paypal.hide();
+    $bitcoin.hide();
+  }
+  if($("#payment option:selected").val() === "paypal"){
+    $creditCard.hide();
+    $paypal.show();
+    $bitcoin.hide();
+  }
+  if($("#payment option:selected").val() === "bitcoin"){
+    $creditCard.hide();
+    $paypal.hide();
+    $bitcoin.show();
+  }
+});
