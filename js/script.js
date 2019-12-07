@@ -144,18 +144,34 @@ $payment.on("change", ()=> {
 });
 
 /*-------------form validation---------------*/
+//error message of a non-empty name feld
 const $nameMsg = $("<div id='nameMsg'><p>Please enter your name</p></div>");
 $nameMsg.css("color", "red");
+$nameMsg.children().css("font-size","15px");
+//error message of characters that are not allowed
+const $nameError = $("<div id='nameMsg'><p>Please enter again without special characters and consecutive spaces</p></div>");
+$nameError.css("color", "red");
+$nameError.children().css("font-size","15px");
+
+//name field does not allow special characters and mutpe spaces
+let specialChar = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+
 $(document).ready(()=>{
   $("#submit").on("click", (e)=>{
+    //vadaton for name field
     var name = $("#name").val();
       if(name==""){
         e.preventDefault();
         $("#name").css("border", "2px solid red");
-        $("fieldset #name").after($nameMsg);
+        $("#name").before($nameMsg);
       }
       else{
         $("#name").css("border", "2px solid rgb(111, 157, 220)");
+      }
+      if(name !="" && !specialChar.test($("#name").val())){
+        e.preventDefault();
+        $("#name").css("border", "2px solid red");
+        $("#name").before($nameError);
       }
       
   });
