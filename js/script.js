@@ -142,3 +142,21 @@ $payment.on("change", ()=> {
     $bitcoin.show();
   }
 });
+
+/*-------------form validation---------------*/
+const $nameMsg = $("<div id='nameMsg'><p>Please enter your name</p></div>");
+$nameMsg.css("color", "red");
+$(document).ready(()=>{
+  $("#submit").on("click", (e)=>{
+    var name = $("#name").val();
+      if(name==""){
+        e.preventDefault();
+        $("#name").css("border", "2px solid red");
+        $("fieldset #name").after($nameMsg);
+      }
+      else{
+        $("#name").css("border", "2px solid rgb(111, 157, 220)");
+      }
+      
+  });
+});
