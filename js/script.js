@@ -177,14 +177,12 @@ $emailError.children().css("font-size","15px");
 
 /*-------------form validation-----------*/
 
-// name validation border
+//------- name validation-------------//
 const validateName= (e)=>{
 
   let name = $("#name").val();
 
-  // const $nameMsg = $("<div id='nameMsg'><p>Please enter your name</p></div>");
-  // $nameMsg.css("color", "red");
-  // $nameMsg.children().css("font-size","15px");
+
   if(name==""){
     e.preventDefault();
     $("#nameMsg2").remove();
@@ -204,6 +202,7 @@ const validateName= (e)=>{
   }
 };
 
+//----------email validation-------------//
 const validateEmail = (e)=>{
   let mail = $("#mail").val();
   if(mail ==""){
