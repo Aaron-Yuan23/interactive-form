@@ -143,41 +143,92 @@ $payment.on("change", ()=> {
   }
 });
 
-/*-------------form validation---------------*/
-//error message of a non-empty name feld
-const $nameMsg = $("<div id='nameMsg'><p>Please enter your name</p></div>");
+/*-------------form validation messages---------------*/
+
+//--------------name validation messages--------------//
+
+//error message of name feld being empty
+const $nameMsg = $("<div id='nameMsg1'><p>Please enter your name in the name field</p></div>");
 $nameMsg.css("color", "red");
 $nameMsg.children().css("font-size","15px");
+
 //error message of characters that are not allowed
-const $nameError = $("<div id='nameMsg'><p>Please enter again without special characters and consecutive spaces</p></div>");
+const $nameError = $("<div id='nameMsg2'><p>Please enter your name without special characters or consecutive spaces</p></div>");
 $nameError.css("color", "red");
 $nameError.children().css("font-size","15px");
 
 //name field does not allow special characters and mutpe spaces
-let specialChar = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+let noSpecialChar = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+
+
+//------------email validation message----------------//
 let validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
+//error message of email field being empty
+const $emailMsg = $("<div id='emailMsg1'><p>Please enter an email address in the email field</p></div>");
+$emailMsg.css("color", "red");
+$emailMsg.children().css("font-size","15px");
 
-$(document).ready(()=>{
-  $("#submit").on("click", (e)=>{
-    //vadaton for name field
-    let name = $("#name").val();
+//error message of email address that are not valid
+const $emailError = $("<div id='emailMsg2'><p>Please enter a valid email address</p></div>");
+$emailError.css("color", "red");
+$emailError.children().css("font-size","15px");
+
+
+/*-------------form validation-----------*/
+
+// name validation border
+const validateName= (e)=>{
+
+  let name = $("#name").val();
+
+  // const $nameMsg = $("<div id='nameMsg'><p>Please enter your name</p></div>");
+  // $nameMsg.css("color", "red");
+  // $nameMsg.children().css("font-size","15px");
   if(name==""){
     e.preventDefault();
+    $("#nameMsg2").remove();
     $("#name").css("border", "2px solid red");
     $("#name").before($nameMsg);
   }
   else{
+    $("#nameMsg1").remove();
+    $("#nameMsg2").remove();
     $("#name").css("border", "2px solid rgb(111, 157, 220)");
   }
-  if(name !="" && !specialChar.test($("#name").val())){
+  if(name !="" && !noSpecialChar.test($("#name").val())){
     e.preventDefault();
+    $("#nameMsg1").remove();
     $("#name").css("border", "2px solid red");
     $("#name").before($nameError);
   }
-      //validation for email input
+};
 
-      
-  });
+const validateEmail = (e)=>{
+  let mail = $("#mail").val();
+  if(mail ==""){
+    e.preventDefault();
+    $("#emailMsg2").remove();
+    $("#mail").css("border", "2px solid red");
+    $("#mail").before($emailMsg);
+  }
+  else{
+    $("#emailMsg1").remove();
+    $("#emailMsg2").remove();
+    $("#mail").css("border", "2px solid rgb(111, 157, 220)");
+  }
+  if(mail !="" && !validEmail.test($("#mail").val())){
+    e.preventDefault();
+    $("#emailMsg1").remove();
+    $("#mail").css("border", "2px solid red");
+    $("#mail").before($emailError);
+  }
+};
+
+
+$(document).ready(()=>{
+  $("#submit").on("click", (e)=>{
+   validateName(e);
+   validateEmail(e);
+ });
 });
-
