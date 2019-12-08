@@ -155,24 +155,29 @@ $nameError.children().css("font-size","15px");
 
 //name field does not allow special characters and mutpe spaces
 let specialChar = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+let validEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
 
 $(document).ready(()=>{
   $("#submit").on("click", (e)=>{
     //vadaton for name field
-    var name = $("#name").val();
-      if(name==""){
-        e.preventDefault();
-        $("#name").css("border", "2px solid red");
-        $("#name").before($nameMsg);
-      }
-      else{
-        $("#name").css("border", "2px solid rgb(111, 157, 220)");
-      }
-      if(name !="" && !specialChar.test($("#name").val())){
-        e.preventDefault();
-        $("#name").css("border", "2px solid red");
-        $("#name").before($nameError);
-      }
+    let name = $("#name").val();
+  if(name==""){
+    e.preventDefault();
+    $("#name").css("border", "2px solid red");
+    $("#name").before($nameMsg);
+  }
+  else{
+    $("#name").css("border", "2px solid rgb(111, 157, 220)");
+  }
+  if(name !="" && !specialChar.test($("#name").val())){
+    e.preventDefault();
+    $("#name").css("border", "2px solid red");
+    $("#name").before($nameError);
+  }
+      //validation for email input
+
       
   });
 });
+
